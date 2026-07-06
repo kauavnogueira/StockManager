@@ -1,0 +1,6 @@
+<% if (mensagem) { %>
+  <div class="alert alert--<%= mensagem.tipo %>" role="alert">
+    <i data-lucide="<%= mensagem.tipo === 'sucesso' ? 'circle-check' : 'circle-x' %>" width="16" height="16" class="alert__icon"></i>
+    <span class="alert__text"><%= mensagem.texto %></span>
+  </div>
+<% } %>

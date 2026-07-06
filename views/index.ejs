@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <div class="app">
+    <%- include('partials/sidebar') %>
+
+    <div class="app__main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <h1 class="topbar__title">Produtos</h1>
+          <p class="topbar__subtitle">Gerencie o cadastro e o estoque de produtos.</p>
+        </div>
+        <div class="topbar__right">
+          <span class="topbar__count">
+            <strong><%= produtos.length %></strong>
+            <%= produtos.length === 1 ? 'produto cadastrado' : 'produtos cadastrados' %>
+          </span>
+          <button id="dark-toggle" class="dark-toggle__btn" aria-label="Alternar tema">
+            <span class="dark-toggle__icon dark-toggle__icon--light">
+              <i data-lucide="sun" width="16" height="16"></i>
+            </span>
+            <span class="dark-toggle__icon dark-toggle__icon--dark">
+              <i data-lucide="moon" width="16" height="16"></i>
+            </span>
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <%- include('partials/alert') %>
+
+        <section class="card" aria-labelledby="form-heading">
+          <% const editando = form && form.id; %>
+          <div class="card__header">
+            <h2 class="card__title" id="form-heading">
+              <i data-lucide="<%= editando ? 'pencil' : 'plus-circle' %>" width="16" height="16" class="card__title-icon"></i>
+              <%= editando ? 'Editar produto' : 'Cadastrar produto' %>
+            </h2>
+          </div>
+          <div class="card__body">
+            <form class="form" method="POST" action="<%= editando ? '/produtos/' + form.id : '/produtos' %>" novalidate>
+              <% if (editando) { %>
+                <input type="hidden" name="_method" value="PUT" />
+              <% } %>
+
+              <div class="form__field">
+                <label class="form__label" for="nome">Nome</label>
+                <input
+                  class="form__input"
+                  type="text"
+                  id="nome"
+                  name="nome"
+                  placeholder="Ex.: Notebook Dell Inspiron 15"
+                  autocomplete="off"
+                  value="<%= form && form.nome ? form.nome : '' %>"
+                />
+              </div>
+
+              <div class="form__row">
+                <div class="form__field">
+                  <label class="form__label" for="preco">Preço (R$)</label>
+                  <input
+                    class="form__input"
+                    type="number"
+                    id="preco"
+                    name="preco"
+                    placeholder="0,00"
+                    min="0"
+                    step="0.01"
+                    value="<%= form && form.preco ? form.preco : '' %>"
+                  />
+                </div>
+
+                <div class="form__field">
+                  <label class="form__label" for="quantidade">Quantidade</label>
+                  <input
+                    class="form__input"
+                    type="number"
+                    id="quantidade"
+                    name="quantidade"
+                    placeholder="0"
+                    min="0"
+                    value="<%= form && form.quantidade ? form.quantidade : '' %>"
+                  />
+                </div>
+              </div>
+
+              <div class="form__footer">
+                <button class="btn btn--primary" type="submit">
+                  <i data-lucide="<%= editando ? 'save' : 'plus' %>" width="15" height="15"></i>
+                  <%= editando ? 'Salvar alterações' : 'Cadastrar produto' %>
+                </button>
+                <% if (editando) { %>
+                  <a class="btn btn--secondary" href="/produtos">Cancelar</a>
+                <% } %>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="list-heading">
+          <div class="card__header">
+            <h2 class="card__title" id="list-heading">
+              <i data-lucide="warehouse" width="16" height="16" class="card__title-icon"></i>
+              Estoque
+            </h2>
+          </div>
+          <div class="card__body card__body--flush">
+            <% if (produtos.length === 0) { %>
+              <div class="empty-state">
+                <i data-lucide="inbox" width="36" height="36" class="empty-state__icon"></i>
+                <p class="empty-state__title">Nenhum produto cadastrado</p>
+                <p class="empty-state__desc">Adicione o primeiro produto usando o formulário acima.</p>
+              </div>
+            <% } else { %>
+              <table class="table">
+                <thead class="table__head">
+                  <tr>
+                    <th class="table__th">Produto</th>
+                    <th class="table__th table__th--right">Preço</th>
+                    <th class="table__th table__th--center">Qtd.</th>
+                    <th class="table__th table__th--right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody class="table__body">
+                  <% produtos.forEach(function(produto) { %>
+                    <tr class="table__row">
+                      <td class="table__td">
+                        <span class="table__product-name"><%= produto.nome %></span>
+                      </td>
+                      <td class="table__td table__td--right">
+                        <span class="table__price">
+                          R$ <%= Number(produto.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %>
+                        </span>
+                      </td>
+                      <td class="table__td table__td--center">
+                        <span class="table__qty"><%= produto.quantidade %></span>
+                      </td>
+                      <td class="table__td table__td--right">
+                        <div class="table__actions">
+                          <a href="/produtos/<%= produto.id %>/editar" class="btn btn--sm btn--secondary">
+                            <i data-lucide="pencil" width="13" height="13"></i>
+                            Editar
+                          </a>
+                          <form method="POST" action="/produtos/<%= produto.id %>/excluir">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button class="btn btn--sm btn--danger" type="submit">
+                              <i data-lucide="trash-2" width="13" height="13"></i>
+                              Excluir
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            <% } %>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const toggle = document.getElementById('dark-toggle');
+    const root = document.documentElement;
+
+    function atualizarIcone() {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      document.querySelector('.dark-toggle__icon--light').style.display = isDark ? 'none' : 'flex';
+      document.querySelector('.dark-toggle__icon--dark').style.display = isDark ? 'flex' : 'none';
+    }
+
+    atualizarIcone();
+
+    toggle.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('tema', isDark ? 'light' : 'dark');
+      atualizarIcone();
+    });
+  </script>
+</body>
+</html>

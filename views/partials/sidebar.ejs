@@ -1,0 +1,23 @@
+<aside class="sidebar">
+  <div class="sidebar__brand">
+    <span class="sidebar__brand-mark">
+      <i data-lucide="package" width="16" height="16"></i>
+    </span>
+    <span class="sidebar__brand-name">StockManager</span>
+  </div>
+
+  <nav class="sidebar__nav" aria-label="Navegação principal">
+    <ul class="sidebar__nav-list">
+      <li class="sidebar__nav-item">
+        <a href="/produtos" class="sidebar__nav-link <%= typeof activePage !== 'undefined' && activePage === 'produtos' ? 'sidebar__nav-link--active' : '' %>">
+          <i data-lucide="boxes" width="15" height="15"></i>
+          Produtos
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <footer class="sidebar__footer">
+    <p class="sidebar__footer-text">v1.0.0</p>
+  </footer>
+</aside>
