@@ -1,6 +1,5 @@
 /* ============================================================
-   StockManager
-   Estrutura: Reset, Tokens, Base, Layout, Componentes, Dark e Responsivo
+   Estilos do cadastro de produtos
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -19,16 +18,16 @@
    ------------------------------------------------------------ */
 :root {
   /* Superfícies */
-  --clr-bg:          #f5f5f5;
+  --clr-bg:          #f7f7f4;
   --clr-surface:     #ffffff;
-  --clr-surface-2:   #fafafa;
-  --clr-border:      #e4e4e7;
+  --clr-surface-2:   #f3f3ef;
+  --clr-border:      #deded8;
 
   /* Texto */
   --clr-text-heading: #09090b;
-  --clr-text-body:    #3f3f46;
-  --clr-text-muted:   #71717a;
-  --clr-text-subtle:  #a1a1aa;
+  --clr-text-body:    #3f3f3a;
+  --clr-text-muted:   #74746d;
+  --clr-text-subtle:  #a3a39b;
   --clr-text-inverse: #ffffff;
 
   /* Primario - azul */
@@ -50,15 +49,15 @@
   --clr-danger-border: #fecaca;
 
   /* Sidebar */
-  --clr-sidebar-bg:         #18181b;
-  --clr-sidebar-border:     #27272a;
-  --clr-sidebar-text:       #a1a1aa;
+  --clr-sidebar-bg:         #202124;
+  --clr-sidebar-border:     #34363a;
+  --clr-sidebar-text:       #c2c3c7;
   --clr-sidebar-text-hover: #ffffff;
   --clr-sidebar-hover:      #27272a;
   --clr-sidebar-active:     #3f3f46;
 
   /* Tipografia */
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font: Arial, Helvetica, sans-serif;
   --text-xs:   0.6875rem;
   --text-sm:   0.8125rem;
   --text-base: 0.9375rem;
@@ -71,12 +70,12 @@
   --sp-8: 2rem;     --sp-10: 2.5rem;  --sp-12: 3rem;
 
   /* Formas e sombras */
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   14px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
   --radius-full: 9999px;
   --shadow-sm:   0 1px 2px rgba(0,0,0,.05);
-  --shadow-md:   0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.06);
+  --shadow-md:   0 1px 2px rgba(0,0,0,.04);
 
   /* Layout */
   --sidebar-w: 220px;
@@ -200,7 +199,7 @@ body {
   font-size: var(--text-sm);
   font-weight: 600;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .sidebar__nav {
@@ -264,7 +263,7 @@ body {
   font-size: var(--text-xl);
   font-weight: 700;
   color: var(--clr-text-heading);
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
   line-height: 1.2;
 }
 
@@ -374,7 +373,7 @@ body {
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--clr-text-heading);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .card__title-icon {
@@ -458,7 +457,7 @@ body {
   cursor: pointer;
   white-space: nowrap;
   text-decoration: none;
-  transition: background-color var(--ease), transform var(--ease), box-shadow var(--ease);
+  transition: background-color var(--ease), color var(--ease), box-shadow var(--ease);
   -webkit-user-select: none;
   user-select: none;
 }
@@ -468,7 +467,7 @@ body {
   outline-offset: 2px;
 }
 
-.btn:active { transform: translateY(1px); }
+.btn:active { box-shadow: none; }
 
 .btn--sm {
   padding: var(--sp-2) var(--sp-3);
@@ -484,10 +483,9 @@ body {
 }
 .btn--primary:hover {
   background-color: var(--clr-primary-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
 }
-.btn--primary:active { transform: translateY(0); box-shadow: none; }
+.btn--primary:active { box-shadow: none; }
 
 /* Secundário */
 .btn--secondary {
@@ -496,9 +494,8 @@ body {
 }
 .btn--secondary:hover {
   background-color: var(--clr-primary-bg-hover);
-  transform: translateY(-1px);
 }
-.btn--secondary:active { transform: translateY(0); }
+.btn--secondary:active { box-shadow: none; }
 
 /* Perigo */
 .btn--danger {
@@ -507,9 +504,8 @@ body {
 }
 .btn--danger:hover {
   background-color: var(--clr-danger-bg-hover);
-  transform: translateY(-1px);
 }
-.btn--danger:active { transform: translateY(0); }
+.btn--danger:active { box-shadow: none; }
 
 /* ------------------------------------------------------------
    13. Tabela
@@ -530,8 +526,8 @@ body {
   font-size: var(--text-xs);
   font-weight: 600;
   color: var(--clr-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  text-transform: none;
+  letter-spacing: 0;
   text-align: left;
   white-space: nowrap;
 }

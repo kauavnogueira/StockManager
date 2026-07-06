@@ -10,13 +10,13 @@
     <div class="app__main">
       <header class="topbar">
         <div class="topbar__left">
-          <h1 class="topbar__title">Produtos</h1>
-          <p class="topbar__subtitle">Gerencie o cadastro e o estoque de produtos.</p>
+          <h1 class="topbar__title">Estoque</h1>
+          <p class="topbar__subtitle">Cadastre os produtos e acompanhe o que tem disponível.</p>
         </div>
         <div class="topbar__right">
           <span class="topbar__count">
             <strong><%= produtos.length %></strong>
-            <%= produtos.length === 1 ? 'produto cadastrado' : 'produtos cadastrados' %>
+            <%= produtos.length === 1 ? 'produto no estoque' : 'produtos no estoque' %>
           </span>
           <button id="dark-toggle" class="dark-toggle__btn" aria-label="Alternar tema">
             <span class="dark-toggle__icon dark-toggle__icon--light">
@@ -39,7 +39,7 @@
           <div class="card__header">
             <h2 class="card__title" id="form-heading">
               <i data-lucide="<%= editando ? 'pencil' : 'plus-circle' %>" width="16" height="16" class="card__title-icon"></i>
-              <%= editando ? 'Editar produto' : 'Cadastrar produto' %>
+              <%= editando ? 'Editando produto' : 'Novo produto' %>
             </h2>
           </div>
           <div class="card__body">
@@ -55,7 +55,7 @@
                   type="text"
                   id="nome"
                   name="nome"
-                  placeholder="Ex.: Notebook Dell Inspiron 15"
+                  placeholder="Ex.: Arroz 5kg"
                   autocomplete="off"
                   required
                   value="<%= form && form.nome ? form.nome : '' %>"
@@ -97,7 +97,7 @@
               <div class="form__footer">
                 <button class="btn btn--primary" type="submit">
                   <i data-lucide="<%= editando ? 'save' : 'plus' %>" width="15" height="15"></i>
-                  <%= editando ? 'Salvar alterações' : 'Cadastrar produto' %>
+                  <%= editando ? 'Salvar' : 'Cadastrar' %>
                 </button>
                 <% if (editando) { %>
                   <a class="btn btn--secondary" href="/produtos">Cancelar</a>
@@ -111,15 +111,15 @@
           <div class="card__header">
             <h2 class="card__title" id="list-heading">
               <i data-lucide="warehouse" width="16" height="16" class="card__title-icon"></i>
-              Estoque
+              Produtos cadastrados
             </h2>
           </div>
           <div class="card__body card__body--flush">
             <% if (produtos.length === 0) { %>
               <div class="empty-state">
                 <i data-lucide="inbox" width="36" height="36" class="empty-state__icon"></i>
-                <p class="empty-state__title">Nenhum produto cadastrado</p>
-                <p class="empty-state__desc">Adicione o primeiro produto usando o formulário acima.</p>
+                <p class="empty-state__title">Ainda não tem produto aqui</p>
+                <p class="empty-state__desc">Preencha o cadastro acima para começar.</p>
               </div>
             <% } else { %>
               <table class="table">
