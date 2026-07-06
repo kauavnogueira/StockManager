@@ -11,7 +11,7 @@ app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(methodOverride("_method"));
+app.use(methodOverride((req) => req.body && req.body._method));
 app.use(express.static(path.resolve(__dirname, "public")));
 
 app.get("/", (req, res) => res.redirect("/produtos"));

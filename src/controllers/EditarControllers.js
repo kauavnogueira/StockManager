@@ -9,7 +9,7 @@ exports.FormularioEditarProduto = async (req, res) => {
     });
 
     if (!produto) {
-      return res.status(404).send("Produto nao encontrado");
+      return res.status(404).send("Produto não encontrado");
     }
 
     const produtos = await prisma.produtos.findMany({
@@ -33,19 +33,50 @@ exports.FormularioEditarProduto = async (req, res) => {
 
 exports.EditarProduto = async (req, res) => {
   const { id } = req.params;
-  const { nome, quantidade, preco } = req.body;
+  const { nome, preco, quantidade } = req.body;
 
   try {
-    if (!nome || preco === undefined || quantidade === undefined) {
-      return res.status(400).send("Preencha todos os campos do produto");
+    const produtos = await prisma.produtos.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    if (!nome || !nome.trim() || preco === "" || quantidade === "") {
+      return res.status(400).render("index", {
+        produtos,
+        mensagem: {
+          tipo: "erro",
+          texto: "Produto não atualizado. Preencha todos os campos.",
+        },
+        form: { id: Number(id), nome, preco, quantidade },
+        pageTitle: "Editar produto",
+        activePage: "produtos",
+      });
+    }
+
+    const precoConvertido = Number(preco);
+    const quantidadeConvertida = Number(quantidade);
+
+    if (!Number.isFinite(precoConvertido) || !Number.isInteger(quantidadeConvertida)) {
+      return res.status(400).render("index", {
+        produtos,
+        mensagem: {
+          tipo: "erro",
+          texto: "Produto não atualizado. Informe preço e quantidade válidos.",
+        },
+        form: { id: Number(id), nome, preco, quantidade },
+        pageTitle: "Editar produto",
+        activePage: "produtos",
+      });
     }
 
     await prisma.produtos.update({
       where: { id: Number(id) },
       data: {
         nome: nome.trim(),
-        quantidade: Number(quantidade),
-        preco: Number(preco),
+        preco: precoConvertido,
+        quantidade: quantidadeConvertida,
       },
     });
 

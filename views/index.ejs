@@ -30,7 +30,9 @@
       </header>
 
       <main class="content">
-        <%- include('partials/alert') %>
+        <div id="alert-slot">
+          <%- include('partials/alert') %>
+        </div>
 
         <section class="card" aria-labelledby="form-heading">
           <% const editando = form && form.id; %>
@@ -55,6 +57,7 @@
                   name="nome"
                   placeholder="Ex.: Notebook Dell Inspiron 15"
                   autocomplete="off"
+                  required
                   value="<%= form && form.nome ? form.nome : '' %>"
                 />
               </div>
@@ -70,7 +73,8 @@
                     placeholder="0,00"
                     min="0"
                     step="0.01"
-                    value="<%= form && form.preco ? form.preco : '' %>"
+                    required
+                    value="<%= form && form.preco !== undefined ? form.preco : '' %>"
                   />
                 </div>
 
@@ -83,7 +87,9 @@
                     name="quantidade"
                     placeholder="0"
                     min="0"
-                    value="<%= form && form.quantidade ? form.quantidade : '' %>"
+                    step="1"
+                    required
+                    value="<%= form && form.quantidade !== undefined ? form.quantidade : '' %>"
                   />
                 </div>
               </div>
@@ -146,7 +152,6 @@
                             Editar
                           </a>
                           <form method="POST" action="/produtos/<%= produto.id %>/excluir">
-                            <input type="hidden" name="_method" value="DELETE" />
                             <button class="btn btn--sm btn--danger" type="submit">
                               <i data-lucide="trash-2" width="13" height="13"></i>
                               Excluir
@@ -176,6 +181,39 @@
       document.querySelector('.dark-toggle__icon--light').style.display = isDark ? 'none' : 'flex';
       document.querySelector('.dark-toggle__icon--dark').style.display = isDark ? 'flex' : 'none';
     }
+
+    function mostrarAlerta(tipo, texto) {
+      const alertSlot = document.getElementById('alert-slot');
+
+      alertSlot.innerHTML = `
+        <div class="alert alert--${tipo}" role="alert">
+          <i data-lucide="${tipo === 'sucesso' ? 'circle-check' : 'circle-x'}" width="16" height="16" class="alert__icon"></i>
+          <span class="alert__text">${texto}</span>
+        </div>
+      `;
+
+      lucide.createIcons();
+      alertSlot.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    const formProduto = document.querySelector('.form');
+
+    formProduto.addEventListener('submit', (event) => {
+      const nome = document.getElementById('nome').value.trim();
+      const preco = document.getElementById('preco').value;
+      const quantidade = document.getElementById('quantidade').value;
+      const editando = Boolean(formProduto.querySelector('input[name="_method"][value="PUT"]'));
+
+      if (!nome || !preco || !quantidade) {
+        event.preventDefault();
+        mostrarAlerta(
+          'erro',
+          editando
+            ? 'Produto não atualizado. Preencha todos os campos.'
+            : 'Produto não cadastrado. Preencha todos os campos.'
+        );
+      }
+    });
 
     atualizarIcone();
 

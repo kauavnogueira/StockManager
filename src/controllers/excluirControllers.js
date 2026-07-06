@@ -11,6 +11,6 @@ exports.ExcluirProduto = async (req, res) => {
     return res.redirect("/produtos");
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Falha ao excluir produto");
+    return res.redirect("/produtos");
   }
 };
