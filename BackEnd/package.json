@@ -1,0 +1,40 @@
+{
+  "name": "stockmanager-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend do StockManager",
+  "main": "dist/server.js",
+  "scripts": {
+    "prestart": "npm run build",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "prisma",
+    "postgresql",
+    "estoque"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
+    "prisma": "^6.19.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

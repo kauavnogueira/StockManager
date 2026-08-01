@@ -1,32 +1,35 @@
 {
   "name": "stockmanager",
   "version": "1.0.0",
-  "description": "Aplicação web para cadastro, edição, listagem e exclusão de produtos em estoque.",
-  "main": "server.js",
+  "private": true,
+  "description": "Sistema de gerenciamento de estoque",
+  "workspaces": [
+    "FrontEnd",
+    "BackEnd"
+  ],
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "prisma generate",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "dev": "concurrently -n BACK,FRONT -c blue,green \"npm:dev:back\" \"npm:dev:front\"",
+    "dev:back": "npm run dev --workspace=BackEnd",
+    "dev:front": "npm run dev --workspace=FrontEnd",
+    "build": "npm run build --workspace=FrontEnd && npm run build --workspace=BackEnd",
+    "prestart": "npm run build",
+    "start": "npm run start --workspace=BackEnd",
+    "typecheck": "npm run typecheck --workspace=BackEnd && npm run typecheck --workspace=FrontEnd",
+    "prisma:generate": "npm run prisma:generate --workspace=BackEnd",
+    "prisma:migrate": "npm run prisma:migrate --workspace=BackEnd",
+    "prisma:studio": "npm run prisma:studio --workspace=BackEnd"
   },
   "keywords": [
     "node",
+    "react",
     "express",
-    "ejs",
     "prisma",
     "postgresql",
     "estoque"
   ],
   "author": "",
   "license": "MIT",
-  "type": "commonjs",
-  "dependencies": {
-    "@prisma/client": "^6.19.3",
-    "dotenv": "^16.6.1",
-    "ejs": "^3.1.10",
-    "express": "^5.2.1",
-    "method-override": "^3.0.0",
-    "prisma": "^6.19.3"
+  "devDependencies": {
+    "concurrently": "^9.2.0"
   }
 }

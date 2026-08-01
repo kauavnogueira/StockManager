@@ -1,69 +1,54 @@
-# StockManager
+# StockManager V2
 
-Aplicação web para gerenciamento de produtos em estoque. O sistema permite cadastrar, listar, editar e excluir produtos usando Node.js, Express, EJS, Prisma e PostgreSQL.
-
-## Funcionalidades
-
-- Cadastro de produtos com nome, preço e quantidade.
-- Listagem de produtos em ordem decrescente.
-- Edição de produtos cadastrados.
-- Exclusão de produtos.
-- Interface responsiva com suporte a tema claro e escuro.
+Aplicação de gerenciamento de estoque com frontend React e API Express, ambos em TypeScript.
 
 ## Tecnologias
 
-- Node.js
-- Express
-- EJS
-- Prisma ORM
-- PostgreSQL
-- Method Override
+- React 19, React Router e Vite
+- Node.js, Express e TypeScript
+- Prisma ORM e PostgreSQL
 
-## Como Executar
+## Configuração
 
-1. Instale as dependências:
+Crie `BackEnd/.env` a partir de `BackEnd/.env.example` e informe `DATABASE_URL`.
 
 ```bash
 npm install
-```
-
-2. Crie o arquivo `.env` com base no `.env.example`:
-
-```env
-DATABASE_URL="postgresql://usuario:senha@host:5432/nome_do_banco?sslmode=require"
-```
-
-3. Gere o Prisma Client:
-
-```bash
 npm run prisma:generate
 ```
 
-4. Execute as migrations:
+## Desenvolvimento
+
+Inicie frontend e backend juntos:
 
 ```bash
-npm run prisma:migrate
+npm run dev
 ```
 
-5. Inicie o servidor:
+- Frontend: http://localhost:5173
+- API: http://localhost:3000/api
+
+## Produção
 
 ```bash
 npm start
 ```
 
-A aplicação ficará disponível em `http://localhost:3000`.
+O comando compila os dois workspaces e inicia o Express em http://localhost:3000. O Express também serve o build do React.
 
-## Estrutura
+## Comandos úteis
 
-```txt
-prisma/              Schema e migrations do banco de dados
-public/              Arquivos estáticos, como CSS
-src/controllers/     Regras de cadastro, edição, listagem e exclusão
-src/lib/             Configuração do Prisma Client
-src/routers/         Rotas da aplicação
-views/               Templates EJS
+```bash
+npm run typecheck
+npm run build
+npm run prisma:migrate
+npm run prisma:studio
 ```
 
-## Observações
+## Endpoints
 
-O arquivo `.env` não deve ser enviado para o GitHub, pois contém a URL de conexão com o banco de dados. Use `.env.example` apenas como modelo.
+- `GET /api/health`
+- `GET /api/produtos`
+- `POST /api/produtos`
+- `PUT /api/produtos/:id`
+- `DELETE /api/produtos/:id`

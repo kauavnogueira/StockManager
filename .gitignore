@@ -2,4 +2,8 @@ node_modules
 .env
 .env.local
 /src/generated/prisma
+/BackEnd/dist
+/BackEnd/src/generated/prisma
+/FrontEnd/dist
+*.tsbuildinfo
 .agents
